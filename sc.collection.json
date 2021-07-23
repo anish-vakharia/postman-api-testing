@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "4558d6f7-bda5-4456-8794-a6bf816871f0",
+		"name": "SnapChance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"console.log(jsonData)\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);\r",
+							"console.log(pm.environment.get(\"token\"));\r",
+							"\r",
+							"// Verify status is 201\r",
+							"pm.test(\"Create a valid session SC token\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"// Verify token is present\r",
+							" pm.test(\"Session token generated\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"token\");\r",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/session?email=player2@gmail.com&password=password1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"session"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "player2@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "password1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"console.log(jsonData)\r",
+							"postman.setEnvironmentVariable(\"email\", jsonData.email);\r",
+							"console.log(pm.environment.get(\"email\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"SCBE 476 - Validate if user is able to fetch currency attribute in response by sending a GET call request to /profile endpoint \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.currency).to.eql(\"NOK\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SCBE-366",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate if the response shows the emailState set to 'invalid' when user sends a GET call request to /players/validate_email endpoint by not providing any email in request body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.emailState).to.eql(\"invalid\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/players/validate_email?{{email}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"players",
+						"validate_email"
+					],
+					"query": [
+						{
+							"key": "{{email}}",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SCBE-367",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate if the response shows the emailState set to 'invalid' when user sends a GET call request to /players/validate_email endpoint by providing email in an incorrect format in request body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.emailState).to.eql(\"invalid\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/players/validate_email?{{email}}=wer%23com",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"players",
+						"validate_email"
+					],
+					"query": [
+						{
+							"key": "{{email}}",
+							"value": "wer%23com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SCBE-368",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate if the response shows the emailState set to 'exist' when user sends a GET call request to /players/validate_email endpoint by providing a valid existing email in request body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.emailState).to.eql(\"exist\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "player2@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/players/validate_email",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"players",
+						"validate_email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SCBE-369",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate if the response shows the emailState set to 'noExist' when user sends a GET call request to /players/validate_email endpoint by providing a valid and new email in request body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.emailState).to.eql(\"noExist\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "newemail@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/players/validate_email",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"players",
+						"validate_email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SCBE-370",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate if the response shows the status of the revealed_all flag under the activity object is set to false when a newly registered user sends a GET call request to /profile endpoint with session id as the bearer token\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.activity.revealed_all).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
