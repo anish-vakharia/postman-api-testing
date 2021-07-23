@@ -7,5 +7,5 @@ jobs:
     steps:
       - checkout
       - newman/newman-run:
-          collection: ./Users.postman_collection.json
-          environment: ./My-Remote-API-Testing.postman_environment.json
+          collection: ./Users.sc.collection.json
+          environment: ./sc.env.json
