@@ -7,5 +7,5 @@ jobs:
     steps:
       - checkout
       - newman/newman-run:
-          collection: ./Users.sc.collection.json
-          environment: ./sc.env.json
+          collection: sc.collection.json
+          environment: sc.env.json
