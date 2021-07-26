@@ -9,18 +9,13 @@ jobs:
       - newman/newman-run:
           collection: sc.collection.json
           environment: sc.env.json
-  workflows:
-  version: 2
-  commit-workflow:
-    jobs:
-      - build
-  nightly:
-    triggers:
-      - schedule:
-          cron: "0 * * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build
+trigger: 
+ - schedule:
+    cron: "0 * * * *"
+    filters: 
+      branches: 
+        only: 
+          - master
+jobs: 
+  - build
+    
