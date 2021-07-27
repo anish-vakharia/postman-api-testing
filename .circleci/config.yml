@@ -15,4 +15,4 @@ trigger:
     filters: 
       branches: 
         only: 
-          - master
+          - main
