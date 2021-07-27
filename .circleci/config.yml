@@ -11,7 +11,7 @@ jobs:
           environment: sc.env.json
 triggers: 
  - schedule:
-    cron: "0 * * * *"
+    cron: "*/1 * * * *"
     filters: 
       branches: 
         only: 
