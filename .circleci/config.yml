@@ -9,7 +9,7 @@ jobs:
       - newman/newman-run:
           collection: sc.collection.json
           environment: sc.env.json
-trigger: 
+triggers: 
  - schedule:
     cron: "0 * * * *"
     filters: 
