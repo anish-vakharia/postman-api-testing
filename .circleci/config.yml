@@ -8,15 +8,14 @@ jobs:
       - checkout
       - newman/newman-run:
           collection: sc.collection.json
-          environment: sc.env.json      
-          
-workflows:
+          environment: sc.env.json                
+scheduled-workflows:
   version: 2
   commit:
     jobs:
       - test
       - deploy
-  nightly:
+  hourly:
     triggers:
       - schedule:
           cron: "* * * * *"
@@ -26,7 +25,9 @@ workflows:
                 - master
                 - beta
     jobs:
-      - coverage   
+      - coverage  
+      
+       
 # workflows:
 #   version: 2
 #   commit:
