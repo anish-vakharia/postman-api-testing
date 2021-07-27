@@ -13,8 +13,7 @@ scheduled-workflows:
   version: 2
   commit:
     jobs:
-      - test
-      - deploy
+     - build
   hourly:
     triggers:
       - schedule:
@@ -25,7 +24,7 @@ scheduled-workflows:
                 - master
                 - beta
     jobs:
-      - coverage  
+      - build
       
        
 # workflows:
