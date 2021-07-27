@@ -22,7 +22,7 @@ scheduled-workflows:
           filters:
             branches:
               only:
-                - main
+                - master
 
 # triggers: 
 #  - schedule: commment
