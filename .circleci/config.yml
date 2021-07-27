@@ -10,21 +10,19 @@ jobs:
           collection: sc.collection.json
           environment: sc.env.json
           
-workflows:
+scheduled-workflows:
   version: 2
   commit:
     jobs:
       - build
-  nightly:
-    triggers: #use the triggers key to indicate a scheduled build
+
+  triggers: #use the triggers key to indicate a scheduled build
       - schedule:
           cron: "*/1 * * * *" # use cron syntax to set the schedule
           filters:
             branches:
               only:
                 - main
-    jobs:
-      - build
 
 # triggers: 
 #  - schedule:
