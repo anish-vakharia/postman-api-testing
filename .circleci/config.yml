@@ -1,0 +1,18 @@
+version: 2.1
+orbs:
+  newman: postman/newman@0.0.2
+jobs:
+  build:
+    executor: newman/postman-newman-docker
+    steps:
+      - checkout
+      - newman/newman-run:
+          collection: sc.collection.json
+          environment: sc.env.json
+trigger: 
+ - schedule:
+    cron: "0 * * * *"
+    filters: 
+      branches: 
+        only: 
+          - master
