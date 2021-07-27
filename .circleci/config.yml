@@ -9,12 +9,12 @@ jobs:
       - newman/newman-run:
           collection: sc.collection.json
           environment: sc.env.json                
-scheduled-workflows:
+workflows:
   version: 2
-  commit:
+  commit-workflow:
     jobs:
      - build
-  hourly:
+  schedule-workflow:
     triggers:
       - schedule:
           cron: "* * * * *"
@@ -22,7 +22,6 @@ scheduled-workflows:
             branches:
               only:
                 - master
-                - beta
     jobs:
       - build
       
