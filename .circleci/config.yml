@@ -8,21 +8,37 @@ jobs:
       - checkout
       - newman/newman-run:
           collection: sc.collection.json
-          environment: sc.env.json
+          environment: sc.env.json      
           
 workflows:
   version: 2
   commit:
     jobs:
-      - build
-
-  triggers: #use the triggers key to indicate a scheduled build
+      - test
+      - deploy
+  nightly:
+    triggers:
       - schedule:
-          cron: "* * * * *" # use cron syntax to set the schedule
+          cron: "* * * * *"
           filters:
             branches:
               only:
                 - master
+                - beta
+    jobs:
+      - coverage   
+# workflows:
+#   version: 2
+#   commit:
+#     jobs:
+#       - build
+#   triggers:
+#       - schedule:
+#           cron: "* * * * *" 
+#           filters:
+#             branches:
+#               only:
+#                 - master
 
 # triggers: 
 #  - schedule: commment
