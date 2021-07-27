@@ -10,7 +10,7 @@ jobs:
           collection: sc.collection.json
           environment: sc.env.json
           
-scheduled-workflows:
+workflows:
   version: 2
   commit:
     jobs:
