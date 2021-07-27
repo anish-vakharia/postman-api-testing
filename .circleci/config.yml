@@ -25,7 +25,7 @@ scheduled-workflows:
                 - main
 
 # triggers: 
-#  - schedule:
+#  - schedule: commment
 #     cron: "*/1 * * * *"
 #     filters: 
 #       branches: 
