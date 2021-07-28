@@ -8,26 +8,20 @@ jobs:
       - checkout
       - newman/newman-run:
           collection: sc.collection.json
-          environment: sc.env.json
-          
+          environment: sc.env.json                
 workflows:
   version: 2
-  commit:
+  commit-workflow:
     jobs:
-      - build
-
-  triggers: #use the triggers key to indicate a scheduled build
+     - build
+  schedule-workflow:
+    triggers:
       - schedule:
-          cron: "* * * * *" # use cron syntax to set the schedule
+          cron: "0 * * * *"
           filters:
             branches:
               only:
-                - master
-
-# triggers: 
-#  - schedule: commment
-#     cron: "*/1 * * * *"
-#     filters: 
-#       branches: 
-#         only: 
-#           - main
+                - circleci-editor/main
+                - main
+    jobs:
+      - build 
