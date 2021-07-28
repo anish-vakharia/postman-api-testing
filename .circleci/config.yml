@@ -22,6 +22,6 @@ workflows:
             branches:
               only:
                 - circleci-editor/main
+                - main
     jobs:
-      - build
-      
+      - build 
